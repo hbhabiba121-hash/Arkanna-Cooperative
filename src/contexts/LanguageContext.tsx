@@ -8,7 +8,8 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
-const translations = {
+// Translations can stay here or move to a separate file for cleaner structure
+const translations: Record<Language, Record<string, string>> = {
   fr: {
     'nav.home': 'Accueil',
     'nav.products': 'Produits',
@@ -29,7 +30,7 @@ const translations = {
     'product.benefits': 'Bienfaits',
     'product.ingredients': 'Ingrédients',
     'filter.all': 'Tous les produits',
-    'filter.arganOil': 'Huile d\'Argan',
+    'filter.arganOil': "Huile d'Argan",
     'filter.skincare': 'Soin Visage & Corps',
     'filter.haircare': 'Soin Capillaire',
     'filter.soaps': 'Savons Naturels',
@@ -37,7 +38,7 @@ const translations = {
     'newsletter.title': 'Newsletter',
     'newsletter.description': 'Inscrivez-vous pour recevoir nos offres exclusives',
     'newsletter.placeholder': 'Votre email',
-    'newsletter.button': 'S\'inscrire',
+    'newsletter.button': "S'inscrire",
     'footer.quickLinks': 'Liens Rapides',
     'footer.contact': 'Contact',
     'footer.followUs': 'Suivez-nous',
@@ -86,29 +87,31 @@ const translations = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<Language>('fr');
-  const [dir, setDir] = useState<'ltr' | 'rtl'>('ltr');
-
-  useEffect(() => {
+  // Initialize state from localStorage, fallback to 'ar'
+  const [language, setLanguageState] = useState<Language>(() => {
     const savedLang = localStorage.getItem('arkanna-language') as Language;
-    if (savedLang && (savedLang === 'fr' || savedLang === 'ar')) {
-      setLanguageState(savedLang);
-      setDir(savedLang === 'ar' ? 'rtl' : 'ltr');
-      document.documentElement.dir = savedLang === 'ar' ? 'rtl' : 'ltr';
-      document.documentElement.lang = savedLang;
-    }
-  }, []);
+    return savedLang === 'fr' || savedLang === 'ar' ? savedLang : 'ar';
+  });
+
+  const [dir, setDir] = useState<'ltr' | 'rtl'>(language === 'ar' ? 'rtl' : 'ltr');
+
+  // Update DOM attributes whenever language/dir changes
+  useEffect(() => {
+    document.documentElement.dir = dir;
+    document.documentElement.lang = language;
+  }, [dir, language]);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    setDir(lang === 'ar' ? 'rtl' : 'ltr');
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    const newDir = lang === 'ar' ? 'rtl' : 'ltr';
+    setDir(newDir);
+    document.documentElement.dir = newDir;
     document.documentElement.lang = lang;
     localStorage.setItem('arkanna-language', lang);
   };
 
   const t = (key: string): string => {
-    return translations[language][key as keyof typeof translations.fr] || key;
+    return translations[language][key] || key;
   };
 
   return (
@@ -118,10 +121,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useLanguage() {
   const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
+  if (!context) throw new Error('useLanguage must be used within a LanguageProvider');
   return context;
 }

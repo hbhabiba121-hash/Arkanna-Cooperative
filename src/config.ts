@@ -7,6 +7,26 @@
 export type Language = 'fr' | 'ar';
 
 // Hero Section Configuration
+export interface FooterConfig {
+  brandName: string;
+  brandTagline: string;
+  brandDescription: string;
+  socialLinks: SocialLinkConfig[];
+  navSectionTitle: string;
+  navLinks: NavLinkConfig[];
+  contactSectionTitle: string;
+  contactAddress: string;
+  contactPhone: string;
+  contactEmail: string;
+  newsletterTitle: string;
+  newsletterDescription: string;
+  newsletterPlaceholder: string;
+  newsletterButton: string;
+  copyright: string;
+  policyLinks: PolicyLinkConfig[];
+  developerCredit?: string; // <-- Add this line
+}
+// Hero Section Configuration
 export interface HeroConfig {
   subtitle: string;
   titleLine1: string;
@@ -17,7 +37,6 @@ export interface HeroConfig {
   heroImage: string;
   leafImages: [string, string];
 }
-
 export const heroConfig: Record<Language, HeroConfig> = {
   fr: {
     subtitle: "Coopérative Féminine du Maroc",
