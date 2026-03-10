@@ -1,0 +1,220 @@
+@import '@fontsource/cormorant-garamond/400.css';
+@import '@fontsource/cormorant-garamond/500.css';
+@import '@fontsource/cormorant-garamond/600.css';
+@import '@fontsource/cormorant-garamond/700.css';
+@import '@fontsource/crimson-text/400.css';
+@import '@fontsource/crimson-text/600.css';
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/700.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Argan Theme Colors */
+    --argan-gold: 30 55% 64%;
+    --argan-gold-light: 30 60% 75%;
+    --argan-gold-dark: 30 50% 50%;
+    
+    --sand-beige: 40 70% 93%;
+    --soft-cream: 48 80% 97%;
+    --olive-green: 74 32% 76%;
+    --olive-dark: 74 30% 45%;
+    
+    /* Warm Earth Tones */
+    --earth-light: 35 40% 95%;
+    --earth-medium: 30 25% 85%;
+    --earth-dark: 25 30% 25%;
+    
+    /* shadcn overrides - Light warm theme */
+    --background: 40 70% 96%;
+    --foreground: 25 30% 20%;
+    --card: 48 80% 97%;
+    --card-foreground: 25 30% 20%;
+    --popover: 48 80% 97%;
+    --popover-foreground: 25 30% 20%;
+    --primary: 30 55% 64%;
+    --primary-foreground: 48 80% 97%;
+    --secondary: 74 32% 76%;
+    --secondary-foreground: 25 30% 20%;
+    --muted: 35 30% 88%;
+    --muted-foreground: 25 20% 45%;
+    --accent: 30 55% 64%;
+    --accent-foreground: 48 80% 97%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 30 30% 80%;
+    --input: 35 30% 90%;
+    --ring: 30 55% 64%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  html[dir="rtl"] {
+    direction: rtl;
+  }
+  
+  body {
+    @apply bg-[#FAEDCD] text-[#3D2914] antialiased;
+    font-family: 'Crimson Text', serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cormorant Garamond', serif;
+  }
+  
+  .font-display {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+@layer components {
+  .gold-gradient-text {
+    @apply bg-gradient-to-r from-[#D4A373] via-[#E5B885] to-[#D4A373] bg-clip-text text-transparent;
+  }
+  
+  .argan-gradient {
+    background: linear-gradient(135deg, #FAEDCD 0%, #FEFAE0 50%, #FAEDCD 100%);
+  }
+  
+  .argan-card {
+    @apply bg-[#FEFAE0] rounded-xl shadow-lg border border-[#D4A373]/20;
+  }
+  
+  .argan-button {
+    @apply bg-[#D4A373] text-white px-6 py-3 rounded-full font-medium 
+           transition-all duration-300 hover:bg-[#C49365] hover:shadow-lg
+           hover:scale-105 active:scale-95;
+  }
+  
+  .argan-button-outline {
+    @apply border-2 border-[#D4A373] text-[#D4A373] px-6 py-3 rounded-full font-medium 
+           transition-all duration-300 hover:bg-[#D4A373] hover:text-white
+           hover:scale-105 active:scale-95;
+  }
+  
+  .section-padding {
+    @apply px-4 sm:px-6 lg:px-8 xl:px-16 2xl:px-24;
+  }
+  
+  .leaf-shadow {
+    filter: drop-shadow(0 4px 20px rgba(212, 163, 115, 0.3));
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAEDCD;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4A373;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C49365;
+}
+
+/* Pulse Animation for Hotspots */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Leaf Sway Animation */
+@keyframes sway {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+.animate-sway {
+  animation: sway 3s ease-in-out infinite;
+}
+
+/* Product Card Hover */
+.product-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(212, 163, 115, 0.25);
+}
+
+/* Moroccan Pattern Background */
+.moroccan-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4A373' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
